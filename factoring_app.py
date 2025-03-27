@@ -1,9 +1,27 @@
 import streamlit as st
 import math
+import re
 
 st.title("Polynomial Factoring Assistant")
 st.subheader("Hi JJ! 👋 I made this app just for you ❤️")
 st.markdown("Enter the coefficients of your polynomial as comma-separated values (e.g. `2, 3, 1` for `2x² + 3x + 1`)")
+
+def parse_quadratic(equation):
+    equation = equation.replace(" ", "")
+    if equation[0] != "-":
+        equation = "+" + equation
+    terms = re.findall(r'[+-][^+-]+', equation)
+    a = b = c = 0
+    for term in terms:
+        if "x^2" in term:
+            num = term.replace("x^2", "")
+            a = int(num) if num not in ["+", "-"] else int(num + "1")
+        elif "x" in term:
+            num = term.replace("x", "")
+            b = int(num) if num not in ["+", "-"] else int(num + "1")
+        else:
+            c = int(term)
+    return [a, b, c]
 
 def is_perfect_square(n):
     return n >= 0 and int(math.isqrt(n)) ** 2 == n
@@ -31,11 +49,16 @@ def format_binomial(coef, var, const):
     sign = "+" if const >= 0 else "-"
     return f"({x_part} {sign} {abs(const)})"
 
-input_str = st.text_input("Polynomial Coefficients:")
+input_str = st.text_input("Enter a polynomial (e.g. `x^2 + 5x + 6` or `1,5,6`):")
 
 if input_str:
     try:
-        terms = [int(x.strip()) for x in input_str.split(",")]
+        # Detect if it's a full expression or just coefficients
+        if "x" in input_str.lower():
+            terms = parse_quadratic(input_str)
+        else:
+            terms = [int(x.strip()) for x in input_str.split(",")]
+        st.caption(f"Parsed coefficients: {terms}")
         num_terms = len(terms)
         factoring_method = ""
         factored_form = ""
