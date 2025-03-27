@@ -125,8 +125,31 @@ if input_str:
                         if m * q + n * p == b:
                             factoring_method += "Trinomial (AC Method)"
                             factored_form = format_binomial(m, "x", p) + format_binomial(n, "x", q)
-                            break
+
                     if factored_form:
+                        # Display factored form immediately
+                        st.success(f"**Factoring method used:** {factoring_method}")
+                        st.code(factored_form, language="latex")
+
+                        # Step 1: Create the step-by-step breakdown
+                        step_by_step = f"""
+                            1. **Identify coefficients**: A = {a}, B = {b}, C = {c}  
+                            2. **Multiply A × C**: {a} × {c} = {a * c}  
+                            3. **Find two numbers that multiply to A × C ( {a * c} ) and add to B ({b})**:  
+                               → {m} × {q} = {a * c} and {m} + {q} = {b}  
+                            4. **Rewrite middle term using those numbers**:  
+                               {a}x² + {m}x + {q}x + {c}  
+                            5. **Group and factor**:  
+                               ({a}x² + {m}x) + ({q}x + {c})  
+                            6. **Factor each group**:  
+                               {math.gcd(a, m)}x({a // math.gcd(a, m)}x + {m // math.gcd(a, m)}) + {math.gcd(q, c)}({q // math.gcd(q, c)})x + {c // math.gcd(q, c)}  
+                            7. **Final factor**: {factored_form}
+                        """
+
+                        # Step 2: Add the "Show steps" button below the factored form
+                        if st.button("Show steps"):
+                            st.markdown(step_by_step)  # Show the detailed steps only when clicked
+
                         break
 
         # 4-term Grouping
@@ -145,8 +168,7 @@ if input_str:
                 factored_form = f"({outer1} + {outer2}){inner}"
 
         if factored_form:
-            st.success(f"**Factoring method used:** {factoring_method}")
-            st.code(factored_form, language="latex")
+
             messages = [
                 "Griddy on 'em, JJ! 🕺🔥",
                 "Certified Math Savage 😤",
