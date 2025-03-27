@@ -49,6 +49,14 @@ def format_binomial(coef, var, const):
     sign = "+" if const >= 0 else "-"
     return f"({x_part} {sign} {abs(const)})"
 
+def clean_input(expr):
+    # Insert * between variables and coefficients (e.g., 2xy → 2*x*y)
+    # This finds things like "2xy" or "ab", and adds the *s
+    expr = re.sub(r'(?<=[a-zA-Z])(?=[a-zA-Z])', '*', expr)      # ab → a*b
+    expr = re.sub(r'(?<=\d)(?=[a-zA-Z])', '*', expr)            # 2x → 2*x
+    expr = re.sub(r'(?<=[a-zA-Z])(?=\()', '*', expr)            # x(y+1) → x*(y+1)
+    return expr
+
 input_str = st.text_input("Enter a polynomial (e.g. `x^2 + 5x + 6` or `1,5,6`):")
 
 if input_str:
@@ -138,3 +146,22 @@ if input_str:
 
     except:
         st.error("Invalid input. Please enter comma-separated integers.")
+
+#advanced logic block
+from sympy import symbols, sympify, factor, latex
+
+st.markdown("---")
+st.subheader("Advanced: Factor any algebraic expression (like `ab^2 + a^2b - 5a - 5b`)")
+
+advanced_input = st.text_input("Enter expression (multivariable OK):")
+
+if advanced_input:
+    try:
+        cleaned = clean_input(advanced_input)
+        expr = sympify(cleaned)
+        factored_expr = factor(expr)
+        st.success("Factored expression:")
+        st.latex(latex(factored_expr))  # ✅ Pretty LaTeX output
+    except Exception as e:
+        st.error(f"Could not factor expression: {e}")
+
