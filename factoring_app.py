@@ -9,8 +9,8 @@ logo = Image.open("JJsMathLab.png")
 st.image(logo, width=150)
 
 st.title("Polynomial Factoring Assistant")
-st.subheader("Hi JJ! 👋 I made this app just for you ❤️")
-st.markdown("For 2 or 3 term polynomials, enter the full equation (e.g. x^2 -49 or 2x^2 +6x -3). For 4 terms or higher, enter the coefficients of your polynomial as comma-separated values (e.g. `2, 3, 1` for `2x² + 3x + 1`)")
+st.subheader("Hi JJ! 👋 I made this app just for you ❤️\n Use responsibly!")
+st.markdown("For 2 or 3 term polynomials, enter the full equation (e.g. `x^2 -49` or `2x^2 +6x -3`). For 4 terms or higher, enter the coefficients of your polynomial as comma-separated values (e.g. `2, 3, 1` for `2x² + 3x + 1`)")
 
 def parse_quadratic(equation):
     equation = equation.replace(" ", "")
