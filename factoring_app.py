@@ -1,6 +1,12 @@
 import streamlit as st
 import math
 import re
+import random
+
+from PIL import Image
+
+logo = Image.open("JJsMathLab.png")
+st.image(logo, width=150)
 
 st.title("Polynomial Factoring Assistant")
 st.subheader("Hi JJ! 👋 I made this app just for you ❤️")
@@ -141,6 +147,20 @@ if input_str:
         if factored_form:
             st.success(f"**Factoring method used:** {factoring_method}")
             st.code(factored_form, language="latex")
+            messages = [
+                "Griddy on 'em, JJ! 🕺🔥",
+                "Certified Math Savage 😤",
+                "Clean factor. Clean Griddy. ✅",
+                "Ain’t no one stopping this Algebra drip 💧",
+                "Big brain energy. 🧠🎉",
+                "That math move was disrespectful 🔥",
+                "That was illegal in 47 states 💥",
+                "That factor was so clean it squeaked ✨",
+                "JJ just speedran algebra like it's minecraft ⛏️",
+                "That polynomial just got bodied 💪",
+                "+1000 XP unlocked 🔓",
+            ]
+            st.info(random.choice(messages))
         else:
             st.warning("This expression cannot be factored over the integers.")
 
