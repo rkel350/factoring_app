@@ -4,7 +4,7 @@ import re
 
 st.title("Polynomial Factoring Assistant")
 st.subheader("Hi JJ! 👋 I made this app just for you ❤️")
-st.markdown("Enter the coefficients of your polynomial as comma-separated values (e.g. `2, 3, 1` for `2x² + 3x + 1`)")
+st.markdown("Enter the coefficients of your polynomial as comma-separated values (e.g. `2, 3, 1` for `2x² + 3x + 1`) or enter the full equation, either should work")
 
 def parse_quadratic(equation):
     equation = equation.replace(" ", "")
